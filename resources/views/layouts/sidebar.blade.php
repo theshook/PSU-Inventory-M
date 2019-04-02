@@ -1,5 +1,5 @@
 <!-- Sidebar  -->
-<nav id="sidebar">
+<nav id="sidebar" class="active">
   <div class="sidebar-header">
     <h3>PSU</h3>
     <strong>IS</strong>
@@ -8,7 +8,7 @@
   <ul class="list-unstyled components">
     <li>
       <a href="#userSubmenu" id="userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        <i class="fas fa-user"></i><i class="hide-text">{{ ucfirst(trans(Auth::user()->name)) }}</i>
+        <i class="fas fa-user"></i><i class="hide-text">{{ ucfirst(trans(Auth::user()->user_fname)) }}</i>
       </a>
       <ul class="collapse list-unstyled" id="userSubmenu">
         <li>

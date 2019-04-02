@@ -1,9 +1,9 @@
 <?php
 
-namespace PSU\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use PSU\Requisition;
+use App\Requisition;
 
 class HomeController extends Controller
 {

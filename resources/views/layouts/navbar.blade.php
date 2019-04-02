@@ -1,9 +1,5 @@
 <!-- Page Content  -->
-@if (session('message'))
-  <div class="alert alert-primary" role="alert">
-    {{ session('message') }}
-  </div>
-@endif
+@include('flash-message')
 
 <div id="content">
 

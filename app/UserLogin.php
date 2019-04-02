@@ -2,16 +2,16 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\User;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Carbon\Carbon;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class UserLogin extends Authenticatable
 {
     use Notifiable;
 
-    protected $primaryKey = 'user_no';
+    protected $primaryKey = 'login_no';
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $guarded = [
-        'user_no'
+        'login_no'
     ];
 
     /**
@@ -40,18 +40,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getCreatedAtAttribute($date)
+    public function user()
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('M d, Y h:i:s a');
-    }
-
-    public function getUpdatedAtAttribute($date)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('M d, Y h:i:s a');
-    }
-
-    public function userLogin()
-    {
-        return $this->hasOne(UserLogin::class, 'user_no');
+        return $this->belongsTo(User::class, 'user_no');
     }
 }

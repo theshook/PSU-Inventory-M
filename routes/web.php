@@ -11,13 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
+
+// Auth::routes();
+
+Route::get('/', 'LoginController@showLoginForm')->name('login');
+Route::post('/', 'LoginController@login');
 
 Route::resource('requisition', 'RequisitionController');
 Route::resource('users', 'UsersController');
-
-Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');

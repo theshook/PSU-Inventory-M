@@ -1,9 +1,13 @@
 <?php
 
-namespace PSU\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth;
 
-use PSU\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\UserLogin;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -35,5 +39,26 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function authenticated(Request $request, User $user)
+    {
+        $request->session()->flash('info', "You have been logged in, {$user->user_fname}");
+        return redirect()->intended($this->redirectPath());
+    }
+
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->only('user_id', 'password');
+        dd($credentials);
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            return redirect()->intended('dashboard');
+        }
+    }
+
+    public function username()
+    {
+        return 'user_id';
     }
 }

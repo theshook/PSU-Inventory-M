@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequisitionsTable extends Migration
+class CreateUserLoginsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateRequisitionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('requisitions', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('stock_no');
-            $table->integer('qty');
-            $table->string('unit');
-            $table->string('description');
+        Schema::create('user_logins', function (Blueprint $table) {
+            $table->bigIncrements('login_no');
+            $table->unsignedBigInteger('user_no');
+            $table->string('password');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateRequisitionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requisitions');
+        Schema::dropIfExists('user_logins');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace PSU;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace PSU\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth;
 
-use PSU\User;
-use PSU\Http\Controllers\Controller;
+use App\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -49,8 +49,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'user_id' => ['required', 'integer', 'unique:users'],
+            'user_fname' => ['required', 'string', 'max:255'],
+            'user_lname' => ['required', 'string', 'max:255'],
+            'user_mname' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -59,13 +61,15 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \PSU\User
+     * @return \App\User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'user_id' => $data['user_id'],
+            'user_fname' => $data['user_fname'],
+            'user_lname' => $data['user_lname'],
+            'user_mname' => $data['user_mname'],
             'password' => Hash::make($data['password']),
         ]);
     }

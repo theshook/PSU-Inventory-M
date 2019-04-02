@@ -1,12 +1,12 @@
 @extends('layouts.main') 
-@section('navbar_content')
+{{-- @section('navbar_content')
 <li class="nav-item">
     <a class="nav-link" href="/requisition/create">New</a>
 </li>
-@endsection
+@endsection --}}
  
 @section('content')
-<div class="float-right">
+{{-- <div class="float-right">
   <a href="/requisition/create" class="btn btn-link">Create New Requisition</a>
 </div>
 
@@ -46,5 +46,5 @@
         $('#example').DataTable();
     } );
 
-</script>
+</script> --}}
 @endsection

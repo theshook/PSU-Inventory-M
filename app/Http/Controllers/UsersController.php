@@ -1,8 +1,8 @@
 <?php
 
-namespace PSU\Http\Controllers;
+namespace App\Http\Controllers;
 
-use PSU\User;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +20,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::where('id', '!=', auth()->id())->get();
+        $users = User::where('user_no', '!=', auth()->user()->user_no)->get();
 
         return view('user.index', [
             'users' => $users,
@@ -49,7 +49,6 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->validate($this->validator());
-        $attributes['password'] = Hash::make($request->password);
         User::create($attributes);
 
         return redirect('/users/');
@@ -58,7 +57,7 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \PSU\User  $user
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
@@ -72,7 +71,7 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \PSU\User  $user
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -87,23 +86,25 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \PSU\User  $user
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
     {
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email
+        $attributes = $request->validate([
+            'user_fname' => ['required', 'string', 'min:2', 'max:255'],
+            'user_lname' => ['required', 'string', 'min:2', 'max:255'],
+            'user_mname' => ['required', 'string', 'min:1', 'max:255'],
         ]);
+        $user->update($attributes);
 
-        return redirect('/users')->with('message', 'User Successfully Updated.');
+        return redirect('/users')->with('success', 'User Successfully Updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \PSU\User  $user
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
@@ -116,9 +117,10 @@ class UsersController extends Controller
     protected function validator()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'user_id' => ['required', 'integer', 'unique:users'],
+            'user_fname' => ['required', 'string', 'min:2', 'max:255'],
+            'user_lname' => ['required', 'string', 'min:2', 'max:255'],
+            'user_mname' => ['required', 'string', 'min:1', 'max:255'],
         ];
     }
 }
